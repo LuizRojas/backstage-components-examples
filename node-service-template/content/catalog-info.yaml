@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ parameters.repoName }}
+  description: ${{ parameters.description }}
+  annotations:
+    # A anotação mais importante: vincula o componente ao GitHub Actions
+    github.com/project-slug: sua-organizacao/${{ parameters.repoName }}
+spec:
+  type: service
+  lifecycle: production
+  owner: meu-time

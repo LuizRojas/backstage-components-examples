@@ -1,0 +1,41 @@
+apiVersion: backstage.io/v1beta1
+kind: Template
+metadata:
+  name: node-service-template
+  title: Serviço Node.js
+  description: Cria um serviço Node.js com CI/CD pré-configurado.
+spec:
+  owner: meu-time
+  type: service
+  parameters:
+    - title: Detalhes do Novo Projeto
+      properties:
+        repoName:
+          title: Nome do Repositório
+          type: string
+          description: O nome do novo repositório no GitHub.
+        description:
+          title: Descrição
+          type: string
+          description: Uma breve descrição do seu serviço.
+  steps:
+    # Passo 1: Copia os arquivos da pasta 'content'
+    - id: template
+      name: Criação do Template
+      action: fetch:template
+      input:
+        url: ./content
+    # Passo 2: Publica os arquivos no GitHub
+    - id: publish
+      name: Publica no GitHub
+      action: publish:github
+      input:
+        repoUrl: "github.com?repo=${{ parameters.repoName }}&owner=sua-organizacao"
+        defaultBranch: main
+    # Passo 3: Registra o novo projeto no catálogo do Backstage
+    - id: register
+      name: Registra no Catálogo
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
