@@ -31,7 +31,7 @@ spec:
       action: publish:github
       input:
         repoUrl: "github.com?repo=${{ parameters.repoName }}&owner=LuizRojas"
-        defaultBranch: main
+        defaultBranch: master
     # Passo 3: Registra o novo projeto no catálogo do Backstage
     - id: register
       name: Registra no Catálogo
