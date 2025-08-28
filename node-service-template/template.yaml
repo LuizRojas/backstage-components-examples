@@ -19,20 +19,17 @@ spec:
           type: string
           description: Uma breve descrição do seu serviço.
   steps:
-    # Passo 1: Copia os arquivos da pasta 'content'
     - id: template
       name: Criação do Template
       action: fetch:template
       input:
         url: ./content
-    # Passo 2: Publica os arquivos no GitHub
     - id: publish
       name: Publica no GitHub
       action: publish:github
       input:
         repoUrl: "github.com?repo=${{ parameters.repoName }}&owner=LuizRojas"
         defaultBranch: master
-    # Passo 3: Registra o novo projeto no catálogo do Backstage
     - id: register
       name: Registra no Catálogo
       action: catalog:register
