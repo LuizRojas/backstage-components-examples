@@ -79,9 +79,6 @@ spec:
       name: Publicando o novo repositório
       action: publish:github
       input:
-        #
-        # AQUI É O AJUSTE. Substitua `sua-org` pelo seu nome de usuário do GitHub.
-        #
         repoUrl: "github.com?owner=seu-nome-de-usuario&repo=${{ parameters.name }}"
         sourcePath: '.'
         defaultBranch: main
