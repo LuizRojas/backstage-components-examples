@@ -8,7 +8,7 @@ metadata:
   annotations:
     # A anotação abaixo é vital para o Backstage encontrar o repositório no GitHub.
     # Certifique-se de substituir 'seu-usuario' pelo seu nome de usuário.
-    github.com/project-slug: seu-usuario/${{ values.name }}
+    github.com/project-slug: LuizRojas/${{ values.name }}
 spec:
   type: service
   owner: ${{ values.owner }}
