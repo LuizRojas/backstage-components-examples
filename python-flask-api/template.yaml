@@ -1,0 +1,107 @@
+# A versão e o tipo do template. É um padrão fixo do Backstage.
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+
+# Metadados do template, que serão exibidos no frontend.
+metadata:
+  name: python-flask-api
+  title: Python Flask API
+  description: Cria uma API REST básica usando Python e Flask, pronta para ser executada.
+  tags:
+    - python
+    - flask
+    - api
+    - service
+    - backend
+
+# A especificação do template.
+spec:
+  # O proprietário padrão do template.
+  owner: user:guest
+  # O tipo de entidade que será criada. No seu caso, um 'service'.
+  type: service
+
+  #
+  # A seção `parameters` define o formulário que o usuário preencherá.
+  #
+  parameters:
+    - title: Detalhes do Novo Serviço
+      required:
+        - name
+        - description
+        - owner
+      properties:
+        # Campo para o nome do projeto/serviço
+        name:
+          title: Nome do Serviço
+          type: string
+          description: O nome do novo serviço Python Flask.
+          # Adiciona uma validação para o formato do nome
+          pattern: '^[a-z0-9](-?[a-z0-9]){4,30}$'
+          ui:autofocus: true
+          ui:options:
+            help: O nome deve ser em minúsculas e ter entre 5 e 30 caracteres.
+
+        # Campo para a descrição
+        description:
+          title: Descrição
+          type: string
+          description: Uma breve descrição para o seu novo serviço.
+
+        # Campo para o proprietário (quem será responsável)
+        owner:
+          title: Proprietário
+          type: string
+          description: O grupo ou usuário que será responsável pelo serviço.
+          # Usa um componente de UI especial para buscar usuários e grupos
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - User
+              - Group
+
+  #
+  # A seção `steps` define as ações que o Backstage vai executar.
+  #
+  steps:
+    # Passo 1: Busca o esqueleto do projeto
+    - id: fetch-base
+      name: Busca o esqueleto do projeto
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          description: ${{ parameters.description }}
+
+    # Passo 2: Publica o esqueleto em um novo repositório no seu GitHub pessoal
+    - id: publish
+      name: Publicando o novo repositório
+      action: publish:github
+      input:
+        #
+        # AQUI É O AJUSTE. Substitua `sua-org` pelo seu nome de usuário do GitHub.
+        #
+        repoUrl: "github.com?owner=seu-nome-de-usuario&repo=${{ parameters.name }}"
+        sourcePath: '.'
+        defaultBranch: main
+        repoVisibility: public # ou 'private'
+
+    # Passo 3: Registra o novo serviço no Catálogo do Backstage
+    - id: register
+      name: Registrando o serviço no catálogo
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  #
+  # A seção `output` define o que será exibido ao final da execução.
+  #
+  output:
+    links:
+      - title: Repositório Criado
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Abrir no Catálogo
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
