@@ -21,7 +21,7 @@ spec:
         serviceName:
           title: Nome do Serviço
           type: string
-          description: O nome do novo serviço (ex: 'auth-service').
+          description: O nome do novo serviço (ex 'auth-service').
           ui:autofocus: true
           ui:options:
             rows: 1
@@ -30,7 +30,7 @@ spec:
         repoName:
           title: Nome do Repositório
           type: string
-          description: O nome do repositório no GitHub/GitLab (ex: 'meu-projeto').
+          description: O nome do repositório no GitHub/GitLab (ex 'meu-projeto').
           ui:autofocus: true
           ui:options:
             rows: 1
