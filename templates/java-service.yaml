@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1beta1
+kind: Template
+metadata:
+  name: java-spring-service
+  title: Serviço Java com Spring Boot
+  description: Cria um novo serviço backend com Spring Boot.
+  tags:
+    - java
+    - spring
+    - backend
+spec:
+  owner: user:sua-organizacao
+  type: service
+
+  # Seção de parâmetros: o que o usuário vai preencher no formulário do Backstage
+  parameters:
+    - title: Detalhes do Novo Serviço
+      required:
+        - serviceName
+      properties:
+        serviceName:
+          title: Nome do Serviço
+          type: string
+          description: O nome do novo serviço (ex: 'auth-service').
+          ui:autofocus: true
+          ui:options:
+            rows: 1
+    - title: Informações do Repositório
+      properties:
+        repoName:
+          title: Nome do Repositório
+          type: string
+          description: O nome do repositório no GitHub/GitLab (ex: 'meu-projeto').
+          ui:autofocus: true
+          ui:options:
+            rows: 1
+
+  # Seção de passos: o que o Backstage vai fazer
+  steps:
+    - id: template
+      name: Criando o projeto a partir do template
+      action: fetch:template
+      input:
+        url: ./
+        values:
+          serviceName: ${{ parameters.serviceName }}
+          repoName: ${{ parameters.repoName }}
+
+    - id: publish
+      name: Publicando o repositório
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        repoUrl: 'github.com?owner=sua-organizacao&repo=${{ parameters.repoName }}'
+        # Você pode adicionar um token de acesso para a autenticação se necessário
+
+    - id: register
+      name: Registrando o serviço no catálogo do Backstage
+      action: catalog:register
+      input:
+        repoContentsUrl: 'https://github.com/sua-organizacao/${{ parameters.repoName }}'
+        catalogInfoPath: '/catalog-info.yaml'
+
+  # Seção de resultados: informações para o usuário após a execução
+  output:
+    remoteUrl: ${{ steps.publish.output.remoteUrl }}
+    entityRef: 'default:component:${{ parameters.serviceName }}'

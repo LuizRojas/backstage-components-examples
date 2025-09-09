@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1beta1
+kind: Group
+metadata:
+  name: dev-team
+  title: Equipe de Desenvolvimento
+  description: A equipe responsável pelo desenvolvimento de produtos e serviços.
+spec:
+  type: team
+  profile:
+    # Opcional: Adicione informações sobre a equipe
+    displayName: Equipe de Dev
+    email: dev-team@sua-organizacao.com
+  children: []

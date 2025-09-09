@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: backstage-catalog-manifest
+spec:
+  targets:
+    # Aponta para todos os arquivos .yaml dentro da pasta 'templates'
+    - ./templates/*.yaml
+    # Aponta para todos os arquivos .yaml dentro da pasta 'components'
+    - ./components/*.yaml
+    # Aponta para todos os arquivos .yaml dentro da pasta 'users'
+    - ./users/*.yaml
