@@ -1,11 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: Projeto Flask API com Python
+  name: projeto-flask-api-python
   description: Flask
   annotations:
     github.com/project-slug: LuizRojas/${{ values.name }}
 spec:
   type: service
-  owner: ${{ values.owner }}
+  owner: user:${{ values.owner }}
   lifecycle: experimental
