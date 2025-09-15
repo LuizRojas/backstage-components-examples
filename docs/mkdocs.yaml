@@ -2,6 +2,7 @@ site_name: teste-MKDocs
 site_description: Esta é uma amostra do MKDocs no Backstage
 plugins:
   - techdocs-core
+  - same-dir
 nav:
   - Getting Started: index.md
 docs_dir: '.'
