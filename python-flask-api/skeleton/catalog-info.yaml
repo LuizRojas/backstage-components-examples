@@ -5,7 +5,8 @@ metadata:
   description: Flask
   annotations:
     github.com/project-slug: LuizRojas/${{ values.name }}
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
-  owner: user:${{ values.owner }}
+  owner: LuizRojas
   lifecycle: experimental
