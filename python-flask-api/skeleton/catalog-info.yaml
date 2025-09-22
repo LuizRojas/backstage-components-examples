@@ -4,8 +4,8 @@ metadata:
   name: projeto-flask-api-python
   description: Flask
   annotations:
-    github.com/project-slug: LuizRojas/${{ values.name }}
-    backstage.io/techdocs-ref: dir:./python-flask-api/
+    github.com/project-slug: LuizRojas/${{ values.name }}/python-flask-api
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: LuizRojas
