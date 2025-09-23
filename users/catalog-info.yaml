@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  # Um nome descritivo para essa "localização" de entidades
+  name: localizacao-organizacao-leds
+  description: Um ponteiro para o arquivo que define os usuários e equipes da organização.
+spec:
+  # O tipo 'file' indica que o alvo está no mesmo repositório.
+  # O caminho é relativo a este arquivo.
+  type: file
+  target: ./org.yaml
