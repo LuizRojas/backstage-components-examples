@@ -8,4 +8,4 @@ spec:
   # O tipo 'file' indica que o alvo está no mesmo repositório.
   # O caminho é relativo a este arquivo.
   type: file
-  target: ./users/org.yaml
+  target: org.yaml
